@@ -5,7 +5,7 @@ Objective: To create a software framework to help generate map and maze to suppo
 
 Things to do:
 1. Create window with Pygames/Tkinter
-2. 3. Implement gridview
+2. Implement gridview
 4. Implement mouse cursor
 5. Implement basic tile (walls, start, goal, agents)
 6. Save and load function
