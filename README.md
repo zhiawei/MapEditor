@@ -1,17 +1,20 @@
-# MapEditor
-Application of MapEditor in enhancing environment generation for AI development
+# NaviLab
+NaviLab: A Dynamic Software Framework for Environment Generation in AI Research
+
+Objective: To create a software framework to help generate map and maze to support AI development
 
 Things to do:
-1. Create window with Pygames
-2. Implement gridview
-3. Implement mouse cursor
-4. Implement basic tile (walls, start, goal, agents)
-5. Save and load function
-6. Export map to array
-7. Create breath first search algorithm
-8. Create depth search algorithm
-9. Create A* search algorithm
-10. Create Reinforcement Learning algorithm
-11. Visualize algorithm in software
-12. Import algorithm in software
-13. Export algorithm
+1. Create window with Pygames/Tkinter
+2. 3. Implement gridview
+4. Implement mouse cursor
+5. Implement basic tile (walls, start, goal, agents)
+6. Save and load function
+7. Export map to array
+8. Create API functions
+9. Create breath first search algorithm
+10. Create depth search algorithm
+11. Create A* search algorithm
+12. Create Reinforcement Learning algorithm
+13. Visualize algorithm in software
+14. Import algorithm in software
+15. Export algorithm
