@@ -8,13 +8,19 @@ Things to do:
 2. Implement gridview
 4. Implement mouse cursor
 5. Implement basic tile (walls, start, goal, agents)
-6. Save and load function
-7. Export map to array
-8. Create API functions
-9. Create breath first search algorithm
-10. Create depth search algorithm
-11. Create A* search algorithm
-12. Create Reinforcement Learning algorithm
-13. Visualize algorithm in software
-14. Import algorithm in software
-15. Export algorithm
+6. Implement map size/scaling function
+7. Improve on smart tiling 
+8. Save and load function
+9. Export map to array
+10. Create API functions
+11. Create breath first search algorithm
+12. Create depth search algorithm
+13. Create A* search algorithm
+14. Create Reinforcement Learning algorithm
+15. Visualize algorithm in software
+16. Import algorithm in software
+17. Export algorithm
+
+Extra features:
+1. Random maze generating
+2. Editing from generated maze
