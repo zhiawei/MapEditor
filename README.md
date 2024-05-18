@@ -1,4 +1,5 @@
-# NaviLab
+# MapEditor
+
 NaviLab: A Dynamic Software Framework for Environment Generation in AI Research
 
 Objective: To create a software framework to help generate map and maze to support AI development
