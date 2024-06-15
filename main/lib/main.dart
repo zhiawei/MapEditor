@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'utilities/custom.dart';
 
 void main() {
   runApp(MyApp()); // The entry point of the app, runs MyApp widget
@@ -27,8 +28,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // Scaffold provides a basic structure for the screen
-        // Currently, it's empty, which means the screen will be blank
-        );
+      backgroundColor: Colors.black,
+      body: Column(
+        children: [
+          toolbar_container(),
+          Expanded(
+            child: Row(
+              children: [
+                TileView_container(),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GridView_container(),
+                            ),
+                            Settings_container()
+                          ],
+                        ),
+                      ),
+                      EditView_container()
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
