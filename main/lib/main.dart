@@ -43,8 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: GridView_container(),
-                            ),
+                                child: Column(children: [
+                              Expanded(child: GridView_container())
+                            ])),
                             Settings_container()
                           ],
                         ),
