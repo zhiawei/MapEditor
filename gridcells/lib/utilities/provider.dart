@@ -7,7 +7,7 @@ final gridProvider = StateNotifierProvider<GridState, GridModel>((ref) {
 });
 
 final selectedColorProvider = StateProvider<Color>((ref) {
-  return Colors.blue;
+  return Colors.white;
 });
 
 final colorMappingProvider = Provider((ref) => ColorMapping());

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gridcells/utilities/provider.dart';
+import 'package:gridcells/utilities/algorithm/BFS.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -61,8 +62,8 @@ class Grid_View extends ConsumerWidget {
       itemBuilder: (context, index) {
         int row = index ~/ 10;
         int col = index % 10;
-        Color tileColor =
-            ColorMapping.alphabetToColor[GridState.gridColors[row][col]]!;
+        String tileColorCode = GridState.gridColors[row][col];
+        Color tileColor = ColorMapping.alphabetToColor[tileColorCode]!;
         return GestureDetector(
           onTap: () {
             final selectedColorCode =
@@ -98,10 +99,10 @@ class Sidebar extends ConsumerWidget {
               color: Colors.red,
               onTap: () =>
                   ref.read(selectedColorProvider.notifier).state = Colors.red),
-          ColorOptionButton(
-              color: Colors.blue,
-              onTap: () =>
-                  ref.read(selectedColorProvider.notifier).state = Colors.blue),
+          // ColorOptionButton(
+          //     color: Colors.blue,
+          //     onTap: () =>
+          //         ref.read(selectedColorProvider.notifier).state = Colors.blue),
           ColorOptionButton(
               color: Colors.green,
               onTap: () => ref.read(selectedColorProvider.notifier).state =
@@ -111,7 +112,12 @@ class Sidebar extends ConsumerWidget {
               onPressed: () {
                 gridNotifier.resetGrid();
               },
-              child: Text('Reset Grid'))
+              child: Text('Reset Grid')),
+          ElevatedButton(
+              onPressed: () {
+                AlgorithmHandler(ref).perform();
+              },
+              child: Text('Run BFS'))
         ],
       ),
     );
@@ -160,5 +166,40 @@ class GridDisplay extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class AlgorithmHandler {
+  final WidgetRef ref;
+  AlgorithmHandler(this.ref);
+
+  void perform() {
+    Point? start;
+    Point? goal;
+    final GridState = ref.read(gridProvider);
+
+    for (int row = 0; row < GridState.gridColors.length; row++) {
+      for (int col = 0; col < GridState.gridColors[row].length; col++) {
+        if (GridState.gridColors[row][col] == 'R') {
+          start = Point(row, col);
+        } else if (GridState.gridColors[row][col] == 'G') {
+          goal = Point(row, col);
+        }
+      }
+    }
+
+    if (start != null && goal != null) {
+      final algorithm = BFS(GridState.gridColors, 10, 10);
+      List<Point> visitedPoints = [];
+      List<Point> path = algorithm.performBFS(start, goal, visitedPoints);
+      if (path.isNotEmpty) {
+        ref.read(gridProvider.notifier).highlightVisited(visitedPoints);
+        ref.read(gridProvider.notifier).highlightPath(path);
+      } else {
+        print('No path found');
+      }
+    } else {
+      print('Start or Goal not defined');
+    }
   }
 }
