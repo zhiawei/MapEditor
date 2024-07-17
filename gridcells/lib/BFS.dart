@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
         body: Row(
           children: [
             Container(
-              width: 500,
-              height: 500,
+              width: 900,
+              height: 900,
               child: GridWithTiles(),
             ),
             Sidebar(),
