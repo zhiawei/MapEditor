@@ -31,15 +31,15 @@ class BFS {
       Point(0, -1),
       Point(-1, 0)
     ];
-    // Queue<Point> queue = Queue<Point>();
-    List<Point> queue = [];
+    Queue<Point> queue = Queue<Point>();
+    // List<Point> queue = [];
     Map<Point, Point?> visited = {};
 
     queue.add(start);
     visited[start] = null;
 
     while (queue.isNotEmpty) {
-      Point current = queue.removeLast();
+      Point current = queue.removeFirst();
 
       if (current == goal) {
         return getPath(visited, start, goal);
