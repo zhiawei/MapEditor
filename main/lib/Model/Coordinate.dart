@@ -14,4 +14,14 @@ class Point {
 
   @override
   int get hashCode => x.hashCode ^ y.hashCode;
+
+  @override
+  String toString() => 'Point(x: $x, y: $y)';
+}
+
+class algoResult {
+  final Point? current;
+  final List<Point> visitedPoints;
+
+  algoResult(this.current, this.visitedPoints);
 }

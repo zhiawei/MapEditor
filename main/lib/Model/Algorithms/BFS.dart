@@ -5,7 +5,19 @@ class BFS {
   final List<List<String>> grid;
   final int rows;
   final int cols;
-  BFS(this.grid, this.rows, this.cols);
+  final Point start;
+  final Point goal;
+  BFS(this.grid, this.rows, this.cols, this.start, this.goal);
+
+  List<Point> directions = [
+    Point(0, 1),
+    Point(1, 0),
+    Point(0, -1),
+    Point(-1, 0)
+  ];
+
+  Queue<Point> queue = Queue<Point>();
+  Map<Point, Point?> visited = {};
 
   List<Point> perform(Point start, Point goal, List<Point> visitedPoints) {
     List<Point> directions = [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/ViewModel/Provider.dart';
-import 'package:main/Model/AlgorithmHandler.dart';
+
 import 'package:main/Utilities/Themes.dart';
 
 class TileView_Container extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/Model/Coordinate.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
 
 class GridModel {
@@ -41,26 +41,46 @@ class GridState extends StateNotifier<GridModel> {
     state = state.copyWith(gridColors: newGridColors);
   }
 
-  void highlightPath(List<Point> path) {
+  Future<void> highlightPath(List<Point> path) async {
     final newGridColors = [...state.gridColors];
     for (Point point in path) {
       if (newGridColors[point.x][point.y] != 'R' &&
           newGridColors[point.x][point.y] != 'G') {
         newGridColors[point.x][point.y] = 'Y';
+        state = state.copyWith(gridColors: newGridColors);
+        await Future.delayed(Duration(milliseconds: 100));
       }
     }
     state = state.copyWith(gridColors: newGridColors);
   }
 
-  void highlightVisited(List<Point> visitedPoints) {
+  Future<void> highlightVisited(List<Point> visitedPoints) async {
     final newGridColors = [...state.gridColors];
     for (final point in visitedPoints) {
       if (newGridColors[point.x][point.y] != 'R' &&
           newGridColors[point.x][point.y] != 'G') {
+        newGridColors[point.x][point.y] = 'Y';
+        state = state.copyWith(gridColors: newGridColors);
+        await Future.delayed(Duration(milliseconds: 100));
         newGridColors[point.x][point.y] = 'B';
+        state = state.copyWith(gridColors: newGridColors); // Delay
       }
     }
     state = state.copyWith(gridColors: newGridColors);
+  }
+
+  void resetPath(List<List<String>> originalGrid) {
+    state = GridModel(
+      gridColors: originalGrid.map((row) {
+        return row.map((cell) {
+          if (cell == 'R' || cell == 'G') {
+            return cell;
+          } else {
+            return 'W';
+          }
+        }).toList();
+      }).toList(),
+    );
   }
 
   String exportGridState() {
@@ -72,10 +92,10 @@ class GridState extends StateNotifier<GridModel> {
   }
 
   Future<void> saveToFile() async {
-    final directory = await FilePicker.platform.getDirectoryPath();
+    final directory = await FilePicker.platform.saveFile();
 
     if (directory != null) {
-      final file = File('$directory/grid_state.txt');
+      final file = File('$directory');
       final gridJson = exportGridState();
       await file.writeAsString(gridJson);
     }
