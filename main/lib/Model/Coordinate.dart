@@ -17,6 +17,20 @@ class Point {
 
   @override
   String toString() => 'Point(x: $x, y: $y)';
+
+  // Convert a Point instance to a Map
+  Map<String, dynamic> toJson() => {
+        'x': x,
+        'y': y,
+      };
+
+  // Create a Point instance from a Map
+  factory Point.fromJson(Map<String, dynamic> json) {
+    return Point(
+      json['x'],
+      json['y'],
+    );
+  }
 }
 
 class algoResult {
