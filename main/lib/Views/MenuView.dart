@@ -9,9 +9,9 @@ class MenuView_Container extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         decoration: ViewDecoration(),
-        child: Menu_View());
+        child: const Menu_View());
   }
 }
 
@@ -25,13 +25,13 @@ class Menu_View extends ConsumerWidget {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: () async {
               await ref.read(gridProvider.notifier).saveToFile();
             },
           ),
           IconButton(
-            icon: Icon(Icons.upload),
+            icon: const Icon(Icons.upload),
             onPressed: () async {
               await ref.read(gridProvider.notifier).loadFromFile();
             },

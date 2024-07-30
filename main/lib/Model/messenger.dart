@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/ViewModel/Provider.dart';
 import 'Coordinate.dart';
@@ -29,19 +28,6 @@ class API_Messenger {
       }
     }
 
-    // print(GridState.gridColors);
-
-    // if (path.isNotEmpty) {
-    //     print(visitedPoints);
-    //     await ref.read(gridProvider.notifier).highlightVisited(visitedPoints);
-    //     await ref.read(gridProvider.notifier).highlightPath(path);
-    //   } else {
-    //     print('No path found');
-    //   }
-    // } else {
-    //   print('Start or Goal not defined');
-    // }
-
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5000/bfs'),
       headers: {'Content-Type': 'application/json'},
@@ -67,7 +53,6 @@ class API_Messenger {
         await ref.read(gridProvider.notifier).highlightVisited(visitedPoints);
         await ref.read(gridProvider.notifier).highlightPath(pathPoints);
       }
-      print(response.body);
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load BFS result');

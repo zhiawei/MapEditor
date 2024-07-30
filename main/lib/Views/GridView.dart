@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/ViewModel/Provider.dart';
 import 'package:main/Utilities/Themes.dart';
-import 'package:main/Model/messenger.dart';
 
 class GridView_Container extends StatefulWidget {
   const GridView_Container({super.key});
@@ -19,13 +18,15 @@ class _GridView_ContainerState extends State<GridView_Container> {
         body: Container(
             width: 500,
             height: 500,
-            padding: EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(5.0),
             // decoration: ViewDecoration(),
             child: Grid_View()));
   }
 }
 
 class Grid_View extends ConsumerWidget {
+  const Grid_View({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GridState = ref.watch(gridProvider);
@@ -34,7 +35,7 @@ class Grid_View extends ConsumerWidget {
     final ColorMapping = ref.read(colorMappingProvider);
     return GridView.builder(
       shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 10, childAspectRatio: 1),
       itemCount: 10 * 10,
       itemBuilder: (context, index) {
@@ -52,7 +53,7 @@ class Grid_View extends ConsumerWidget {
             gridNotifier.setColor(row, col, 'W');
           },
           child: Container(
-            margin: EdgeInsets.all(1),
+            margin: const EdgeInsets.all(1),
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey), color: tileColor),
           ),

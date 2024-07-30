@@ -7,6 +7,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,11 +18,11 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Grid Cells with Riverpod'),
+          title: const Text('Grid Cells with Riverpod'),
         ),
         body: Row(
           children: [
-            Container(
+            SizedBox(
               width: 900,
               height: 900,
               child: GridWithTiles(),
@@ -97,7 +99,7 @@ class GridState extends StateNotifier<GridModel> {
     final start = state.start!;
     final goal = state.goal!;
     final queue = Queue<Point>();
-    final visited = Set<Point>();
+    final visited = <Point>{};
     final parentMap = <Point, Point?>{};
 
     queue.add(start);
@@ -170,6 +172,8 @@ class Point {
 }
 
 class GridWithTiles extends ConsumerWidget {
+  const GridWithTiles({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gridState = ref.watch(gridProvider);
@@ -177,7 +181,7 @@ class GridWithTiles extends ConsumerWidget {
     final selectedColor = ref.watch(selectedColorProvider);
 
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 10,
       ),
       itemCount: 10 * 10,
@@ -220,6 +224,8 @@ class GridWithTiles extends ConsumerWidget {
 }
 
 class Sidebar extends ConsumerWidget {
+  const Sidebar({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gridNotifier = ref.read(gridProvider.notifier);
@@ -245,18 +251,18 @@ class Sidebar extends ConsumerWidget {
             onTap: () =>
                 ref.read(selectedColorProvider.notifier).state = Colors.red,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               gridNotifier.resetGrid();
             },
-            child: Text('Reset Grid'),
+            child: const Text('Reset Grid'),
           ),
           ElevatedButton(
             onPressed: () {
               gridNotifier.bfs();
             },
-            child: Text('Run BFS'),
+            child: const Text('Run BFS'),
           ),
         ],
       ),
@@ -268,14 +274,15 @@ class ColorOptionButton extends StatelessWidget {
   final Color color;
   final VoidCallback onTap;
 
-  ColorOptionButton({required this.color, required this.onTap});
+  const ColorOptionButton(
+      {super.key, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         width: 50,
         height: 50,
         color: color,

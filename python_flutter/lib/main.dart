@@ -5,11 +5,13 @@ import 'dart:typed_data';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Flutter & Python Integration')),
+        appBar: AppBar(title: const Text('Flutter & Python Integration')),
         body: PlotWidget(),
       ),
     );
@@ -17,6 +19,8 @@ class MyApp extends StatelessWidget {
 }
 
 class PlotWidget extends StatefulWidget {
+  const PlotWidget({super.key});
+
   @override
   _PlotWidgetState createState() => _PlotWidgetState();
 }
@@ -46,7 +50,7 @@ class _PlotWidgetState extends State<PlotWidget> {
         future: _plotImage,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

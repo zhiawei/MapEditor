@@ -48,7 +48,7 @@ class GridState extends StateNotifier<GridModel> {
           newGridColors[point.x][point.y] != 'G') {
         newGridColors[point.x][point.y] = 'Y';
         state = state.copyWith(gridColors: newGridColors);
-        await Future.delayed(Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 100));
       }
     }
     state = state.copyWith(gridColors: newGridColors);
@@ -61,7 +61,7 @@ class GridState extends StateNotifier<GridModel> {
           newGridColors[point.x][point.y] != 'G') {
         newGridColors[point.x][point.y] = 'Y';
         state = state.copyWith(gridColors: newGridColors);
-        await Future.delayed(Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 100));
         newGridColors[point.x][point.y] = 'B';
         state = state.copyWith(gridColors: newGridColors); // Delay
       }
@@ -95,7 +95,7 @@ class GridState extends StateNotifier<GridModel> {
     final directory = await FilePicker.platform.saveFile();
 
     if (directory != null) {
-      final file = File('$directory');
+      final file = File(directory);
       final gridJson = exportGridState();
       await file.writeAsString(gridJson);
     }

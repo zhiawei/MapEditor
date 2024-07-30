@@ -16,7 +16,7 @@ class Layout_Scaffold extends StatefulWidget {
 class _Layout_ScaffoldState extends State<Layout_Scaffold> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         backgroundColor: MainBackgroundColor,
         body: Column(
           children: [

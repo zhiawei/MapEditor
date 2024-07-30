@@ -31,9 +31,9 @@ class AlgorithmHandler {
 
     if (start != null && goal != null) {
       if (selectedAlgorithm == 'BFS') {
-        this.algorithms = BFS(GridState.gridColors, 10, 10, start, goal);
+        algorithms = BFS(GridState.gridColors, 10, 10, start, goal);
       } else if (selectedAlgorithm == 'DFS') {
-        this.algorithms = DFS(GridState.gridColors, 10, 10);
+        algorithms = DFS(GridState.gridColors, 10, 10);
       }
       List<Point> path = algorithms.perform(start, goal, visitedPoints);
       if (path.isNotEmpty) {

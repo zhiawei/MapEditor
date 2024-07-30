@@ -12,3 +12,5 @@ final selectedColorProvider = StateProvider<Color>((ref) {
 });
 
 final colorMappingProvider = Provider((ref) => ColorMapping());
+
+final selectedAlgorithmProvider = StateProvider<String?>((ref) => null);

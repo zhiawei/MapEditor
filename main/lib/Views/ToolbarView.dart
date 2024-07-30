@@ -12,16 +12,20 @@ class ToolbarView_Container extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: 150,
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         decoration: ViewDecoration(),
         child: Toolbar_View());
   }
 }
 
 class Toolbar_View extends ConsumerWidget {
+  const Toolbar_View({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var algorithm = null;
+    final selectedAlgorithm = ref.watch(selectedAlgorithmProvider);
+    final List<String> algorithms = ['BFS', 'DFS'];
+    var algorithm;
     String message;
     final GridState = ref.watch(gridProvider);
     final gridNotifier = ref.read(gridProvider.notifier);
@@ -29,42 +33,49 @@ class Toolbar_View extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          DropdownButton<String>(
+            value: selectedAlgorithm,
+            hint: Text('Select an algorithm', style: MainTextStyle()),
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                ref.read(selectedAlgorithmProvider.notifier).state = newValue;
+              }
+            },
+            items: algorithms.map((String algorithm) {
+              return DropdownMenuItem<String>(
+                  value: algorithm,
+                  child: Text(
+                    algorithm,
+                    style: MainTextStyle(),
+                  ));
+            }).toList(),
+            dropdownColor: Colors.blueAccent,
+            underline: Container(
+              height: 2,
+              color: Colors.transparent, // Hide the default underline
+            ),
+            iconEnabledColor: Colors.blue,
+          ),
+          const SizedBox(width: 16),
           ElevatedButton(
               onPressed: () {
-                algorithm = 'BFS';
+                algorithm = selectedAlgorithm;
                 gridNotifier.resetPath(GridState.gridColors);
                 AlgorithmHandler(ref, algorithm).perform();
               },
-              child: Text('Run BFS')),
-          SizedBox(width: 16),
-          ElevatedButton(
-              onPressed: () {
-                algorithm = 'DFS';
-                gridNotifier.resetPath(GridState.gridColors);
-                AlgorithmHandler(ref, algorithm).perform();
-              },
-              child: Text('Run DFS')),
-          SizedBox(width: 16),
+              child: const Text('Run Algorithm')),
+          const SizedBox(width: 16),
           ElevatedButton(
               onPressed: () async {
                 try {
                   gridNotifier.resetPath(GridState.gridColors);
-                  final message = await API_Messenger(ref).fetchBFSResult();
-                  print(message);
+                  await API_Messenger(ref).fetchBFSResult();
                   // Handle the message as needed
                 } catch (e) {
                   print('Error: $e');
                 }
               },
-              child: Text('Send')),
-          // SizedBox(width: 16),
-          // ElevatedButton(
-          //     onPressed: () {
-          //       algorithm = 'BFS';
-          //       gridNotifier.resetPath(GridState.gridColors);
-          //       AlgorithmHandler(ref, algorithm).perform();
-          //     },
-          //     child: Text('Run DFS')),
+              child: const Text('Send')),
         ],
       ),
     );

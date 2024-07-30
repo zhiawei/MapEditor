@@ -10,26 +10,27 @@ class SettingView_Container extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 300,
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         decoration: ViewDecoration(),
         child: GridDisplay());
   }
 }
 
 class GridDisplay extends ConsumerWidget {
+  const GridDisplay({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gridState = ref.watch(gridProvider);
 
     return Padding(
-      padding: EdgeInsets.all(3.0),
+      padding: const EdgeInsets.all(3.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Grid State:', style: GridTextStyle()),
           ...gridState.gridColors
-              .map((row) => Text(row.join(' '), style: GridTextStyle()))
-              .toList(),
+              .map((row) => Text(row.join(' '), style: GridTextStyle())),
         ],
       ),
     );

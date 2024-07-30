@@ -4,7 +4,7 @@ import 'package:gridcells/utilities/provider.dart';
 import 'package:gridcells/utilities/algorithm/BFS.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MapEditor GridCells',
       home: HomeScreen(),
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
             width: 500,
             height: 500,
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Grid_View()),
         Sidebar(),
         GridDisplay()
@@ -46,6 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Grid_View extends ConsumerWidget {
+  const Grid_View({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GridState = ref.watch(gridProvider);
@@ -55,8 +57,8 @@ class Grid_View extends ConsumerWidget {
 
     return GridView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 10, childAspectRatio: 1),
       itemCount: 10 * 10,
       itemBuilder: (context, index) {
@@ -74,7 +76,7 @@ class Grid_View extends ConsumerWidget {
             gridNotifier.setColor(row, col, 'W');
           },
           child: Container(
-            margin: EdgeInsets.all(1),
+            margin: const EdgeInsets.all(1),
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey), color: tileColor),
           ),
@@ -85,6 +87,8 @@ class Grid_View extends ConsumerWidget {
 }
 
 class Sidebar extends ConsumerWidget {
+  const Sidebar({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gridNotifier = ref.read(gridProvider.notifier);
@@ -107,17 +111,17 @@ class Sidebar extends ConsumerWidget {
               color: Colors.green,
               onTap: () => ref.read(selectedColorProvider.notifier).state =
                   Colors.green),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
                 gridNotifier.resetGrid();
               },
-              child: Text('Reset Grid')),
+              child: const Text('Reset Grid')),
           ElevatedButton(
               onPressed: () {
                 AlgorithmHandler(ref).perform();
               },
-              child: Text('Run BFS'))
+              child: const Text('Run BFS'))
         ],
       ),
     );
@@ -128,7 +132,8 @@ class ColorOptionButton extends ConsumerWidget {
   final Color color;
   final VoidCallback onTap;
 
-  ColorOptionButton({required this.color, required this.onTap});
+  const ColorOptionButton(
+      {super.key, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -138,7 +143,7 @@ class ColorOptionButton extends ConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         width: 50,
         height: 50,
         decoration: BoxDecoration(
@@ -153,16 +158,19 @@ class ColorOptionButton extends ConsumerWidget {
 }
 
 class GridDisplay extends ConsumerWidget {
+  const GridDisplay({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gridState = ref.watch(gridProvider);
 
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Text('Grid State:', style: TextStyle(fontWeight: FontWeight.bold)),
-          ...gridState.gridColors.map((row) => Text(row.join(' '))).toList(),
+          const Text('Grid State:',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          ...gridState.gridColors.map((row) => Text(row.join(' '))),
         ],
       ),
     );

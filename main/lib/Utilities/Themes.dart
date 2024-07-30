@@ -10,24 +10,24 @@ BoxDecoration ViewDecoration() {
 }
 
 TextStyle MainTextStyle() {
-  return TextStyle(color: Colors.white);
+  return const TextStyle(color: Colors.white);
 }
 
 TextStyle GridTextStyle() {
-  return TextStyle(
+  return const TextStyle(
       color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
 }
 
 class ColorMapping {
   final Map<Color, String> colorToAlphabets = {
-    Color.fromARGB(29, 255, 255, 255): 'W',
+    const Color.fromARGB(29, 255, 255, 255): 'W',
     Colors.red: 'R',
     Colors.blue: 'B',
     Colors.green: 'G',
     Colors.yellow: 'Y'
   };
   final Map<String, Color> alphabetToColor = {
-    'W': Color.fromARGB(29, 255, 255, 255),
+    'W': const Color.fromARGB(29, 255, 255, 255),
     'R': Colors.red,
     'B': Colors.blue,
     'G': Colors.green,
