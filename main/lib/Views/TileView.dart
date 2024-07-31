@@ -23,7 +23,7 @@ class Sidebar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gridNotifier = ref.read(gridProvider.notifier);
-    final rowCount = ref.watch(rowCountProvider.state).state;
+    // final rowCount = ref.watch(rowCountProvider.state).state;
     final colCount = ref.watch(colCountProvider.state).state;
 
     return SizedBox(
@@ -46,7 +46,7 @@ class Sidebar extends ConsumerWidget {
           const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
-                gridNotifier.resetGrid(rowCount, colCount);
+                gridNotifier.resetGrid(colCount);
               },
               child: const Text('Reset Grid'))
         ],

@@ -30,10 +30,10 @@ class GridState extends StateNotifier<GridModel> {
             gridColors:
                 List.generate(10, (_) => List<String>.filled(10, 'W'))));
 
-  void resetGrid(int rowCount, int colCount) {
+  void resetGrid(int colCount) {
     state = GridModel(
         gridColors:
-            List.generate(rowCount, (_) => List<String>.filled(colCount, 'W')));
+            List.generate(colCount, (_) => List<String>.filled(colCount, 'W')));
   }
 
   void setColor(int row, int col, String colorCode) {

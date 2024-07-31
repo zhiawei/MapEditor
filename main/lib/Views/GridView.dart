@@ -22,7 +22,7 @@ class GridView_Widget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final width = ref.watch(widthGridProvider.state).state;
     final height = ref.watch(heightGridProvider.state).state;
-    final rowCount = ref.watch(rowCountProvider.state).state;
+    // final rowCount = ref.watch(rowCountProvider.state).state;
     final colCount = ref.watch(colCountProvider.state).state;
     return Scaffold(
       backgroundColor: MainBackgroundColor,
@@ -75,24 +75,24 @@ class GridView_Widget extends ConsumerWidget {
                   ],
                 ),
               )),
-          Align(
-              alignment: Alignment.centerRight,
-              child: RotatedBox(
-                quarterTurns: 3,
-                child: Container(
-                  height: 50,
-                  width: 300,
-                  child: Slider(
-                      value: rowCount.toDouble(),
-                      min: 10,
-                      max: 50,
-                      divisions: 4,
-                      label: 'Rows: ${rowCount}',
-                      onChanged: (value) {
-                        ref.read(rowCountProvider.state).state = value.toInt();
-                      }),
-                ),
-              )),
+          // Align(
+          //     alignment: Alignment.centerRight,
+          //     child: RotatedBox(
+          //       quarterTurns: 3,
+          //       child: Container(
+          //         height: 50,
+          //         width: 300,
+          //         child: Slider(
+          //             value: rowCount.toDouble(),
+          //             min: 10,
+          //             max: 50,
+          //             divisions: 4,
+          //             label: 'Rows: ${rowCount}',
+          //             onChanged: (value) {
+          //               ref.read(rowCountProvider.state).state = value.toInt();
+          //             }),
+          //       ),
+          //     )),
         ],
       ),
     );
@@ -108,14 +108,14 @@ class Grid_View extends ConsumerWidget {
     final gridNotifier = ref.read(gridProvider.notifier);
     final selectedColor = ref.watch(selectedColorProvider);
     final ColorMapping = ref.read(colorMappingProvider);
-    final rowCount = ref.watch(rowCountProvider.state).state;
+    // final rowCount = ref.watch(rowCountProvider.state).state;
     final colCount = ref.watch(colCountProvider.state).state;
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: colCount, childAspectRatio: 1),
-      itemCount: rowCount * colCount,
+      itemCount: colCount * colCount,
       itemBuilder: (context, index) {
-        int row = index ~/ rowCount;
+        int row = index ~/ colCount;
         int col = index % colCount;
         String tileColorCode = GridState.gridColors[row][col];
         Color tileColor = ColorMapping.alphabetToColor[tileColorCode]!;
