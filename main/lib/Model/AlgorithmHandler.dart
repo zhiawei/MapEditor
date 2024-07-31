@@ -18,6 +18,8 @@ class AlgorithmHandler {
     Point? goal;
 
     final GridState = ref.read(gridProvider);
+    final rowCount = ref.watch(rowCountProvider.state).state;
+    final colCount = ref.watch(colCountProvider.state).state;
 
     for (int row = 0; row < GridState.gridColors.length; row++) {
       for (int col = 0; col < GridState.gridColors[row].length; col++) {
@@ -31,9 +33,9 @@ class AlgorithmHandler {
 
     if (start != null && goal != null) {
       if (selectedAlgorithm == 'BFS') {
-        algorithms = BFS(GridState.gridColors, 10, 10, start, goal);
+        algorithms = BFS(GridState.gridColors, rowCount, colCount, start, goal);
       } else if (selectedAlgorithm == 'DFS') {
-        algorithms = DFS(GridState.gridColors, 10, 10);
+        algorithms = DFS(GridState.gridColors, rowCount, colCount);
       }
       List<Point> path = algorithms.perform(start, goal, visitedPoints);
       if (path.isNotEmpty) {

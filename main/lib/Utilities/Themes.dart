@@ -15,7 +15,7 @@ TextStyle MainTextStyle() {
 
 TextStyle GridTextStyle() {
   return const TextStyle(
-      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
+      color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold);
 }
 
 class ColorMapping {

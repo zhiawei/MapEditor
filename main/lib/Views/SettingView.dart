@@ -9,7 +9,7 @@ class SettingView_Container extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,
+        width: 500,
         padding: const EdgeInsets.all(5.0),
         decoration: ViewDecoration(),
         child: GridDisplay());

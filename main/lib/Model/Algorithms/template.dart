@@ -1,63 +1,91 @@
-// import 'dart:collection';
-// import 'package:main/Model/Coordinate.dart';
+// class Grid_View extends ConsumerWidget {
+//   const Grid_View({super.key});
 
-// class BFS {
-//   final List<List<String>> grid;
-//   final int rows;
-//   final int cols;
-//   BFS(this.grid, this.rows, this.cols);
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final GridState = ref.watch(gridProvider);
+//     final gridNotifier = ref.read(gridProvider.notifier);
+//     final selectedColor = ref.watch(selectedColorProvider);
+//     final ColorMapping = ref.read(colorMappingProvider);
 
-//   List<Point> perform(Point start, Point goal, List<Point> visitedPoints) {
-//     List<Point> directions = [
-//       Point(0, 1),
-//       Point(1, 0),
-//       Point(0, -1),
-//       Point(-1, 0)
-//     ];
-//     Queue<Point> queue = Queue<Point>();
-//     // List<Point> queue = [];
-//     Map<Point, Point?> visited = {};
+//     double _rowCount = 10;
+//     double _colCount = 10;
 
-//     queue.add(start);
-//     visited[start] = null;
-
-//     while (queue.isNotEmpty) {
-//       Point current = queue.removeFirst();
-
-//       if (current == goal) {
-//         return getPath(visited, start, goal);
-//       }
-
-//       for (Point direction in directions) {
-//         Point neighbor =
-//             Point(current.x + direction.x, current.y + direction.y);
-
-//         if (isValid(neighbor) &&
-//             grid[neighbor.x][neighbor.y] != 'R' &&
-//             !visited.containsKey(neighbor)) {
-//           queue.add(neighbor);
-//           visited[neighbor] = current;
-//           visitedPoints.add(neighbor);
-//         }
-//       }
-//     }
-//     return [];
-//   }
-
-//   bool isValid(Point point) {
-//     return point.x >= 0 && point.y >= 0 && point.x < rows && point.y < cols;
-//   }
-
-//   List<Point> getPath(Map<Point, Point?> visited, Point start, Point goal) {
-//     List<Point> path = [];
-//     Point? current = goal;
-
-//     while (current != null) {
-//       path.add(current);
-//       current = visited[current];
-//     }
-
-//     path = path.reversed.toList();
-//     return path;
+//     return Scaffold(
+//       body: Stack(
+//         children: [
+//           Positioned.fill(
+//               child: GridView.builder(
+//                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                       crossAxisCount: _colCount.toInt()),
+//                   itemCount: (_rowCount * _colCount).toInt(),
+//                   itemBuilder: (context, index) {
+//                     int row = index ~/ _colCount.toInt();
+//                     int col = index % _colCount.toInt();
+//                     String tileColorCode = GridState.gridColors[row][col];
+//                     Color tileColor =
+//                         ColorMapping.alphabetToColor[tileColorCode]!;
+//                     return GestureDetector(
+//                         onTap: () {
+//                           final selectedColorCode =
+//                               ColorMapping.colorToAlphabets[selectedColor]!;
+//                           gridNotifier.setColor(row, col, selectedColorCode);
+//                         },
+//                         onSecondaryTap: () {
+//                           gridNotifier.setColor(row, col, 'W');
+//                         },
+//                         child: Container(
+//                           margin: const EdgeInsets.all(1),
+//                           decoration: BoxDecoration(
+//                               border: Border.all(color: Colors.grey),
+//                               color: tileColor),
+//                         ));
+//                   })),
+//           Positioned(
+//               bottom: 300,
+//               child: Row(
+//                 children: [
+//                   Container(
+//                     width: 50,
+//                     height: 50,
+//                     color: Colors.amber,
+//                   )
+//                 ],
+//               ))
+//           Positioned(
+//               bottom: 500,
+//               child: Row(
+//                 children: [
+//                   Expanded(
+//                       child: Slider(
+//                           value: _colCount,
+//                           min: 10,
+//                           max: 50,
+//                           divisions: 40,
+//                           label: 'Columns: ${_colCount.toInt()}',
+//                           onChanged: (value) {
+//                             _colCount = value;
+//                             ref.refresh(gridProvider);
+//                           }))
+//                 ],
+//               )),
+//           Positioned(
+//               right: 20,
+//               child: RotatedBox(
+//                 quarterTurns: 3,
+//                 child: Slider(
+//                     value: _rowCount,
+//                     min: 10,
+//                     max: 50,
+//                     divisions: 40,
+//                     label: 'Columns: ${_rowCount.toInt()}',
+//                     onChanged: (value) {
+//                       _colCount = value;
+//                       ref.refresh(gridProvider);
+//                     }),
+//               ))
+//         ],
+//       ),
+//     );
 //   }
 // }

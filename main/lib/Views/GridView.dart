@@ -13,14 +13,89 @@ class GridView_Container extends StatefulWidget {
 class _GridView_ContainerState extends State<GridView_Container> {
   @override
   Widget build(BuildContext context) {
+    return GridView_Widget();
+  }
+}
+
+class GridView_Widget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final width = ref.watch(widthGridProvider.state).state;
+    final height = ref.watch(heightGridProvider.state).state;
+    final rowCount = ref.watch(rowCountProvider.state).state;
+    final colCount = ref.watch(colCountProvider.state).state;
     return Scaffold(
-        backgroundColor: MainBackgroundColor,
-        body: Container(
-            width: 500,
-            height: 500,
-            padding: const EdgeInsets.all(5.0),
-            // decoration: ViewDecoration(),
-            child: Grid_View()));
+      backgroundColor: MainBackgroundColor,
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              width: width,
+              height: height,
+              child: Grid_View(),
+            ),
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 50,
+                width: 300,
+                child: Slider(
+                    value: colCount.toDouble(),
+                    min: 10,
+                    max: 50,
+                    divisions: 4,
+                    label: 'Columns: ${colCount}',
+                    onChanged: (value) {
+                      ref.read(colCountProvider.state).state = value.toInt();
+                    }),
+              )),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                width: 300,
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          ref.read(widthGridProvider.state).state += 100;
+                          ref.read(heightGridProvider.state).state += 100;
+                        },
+                        child: const Text('+')),
+                    const SizedBox(width: 16),
+                    ElevatedButton(
+                        onPressed: () {
+                          ref.read(widthGridProvider.state).state -= 100;
+                          ref.read(heightGridProvider.state).state -= 100;
+                        },
+                        child: const Text('-')),
+                  ],
+                ),
+              )),
+          Align(
+              alignment: Alignment.centerRight,
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: Container(
+                  height: 50,
+                  width: 300,
+                  child: Slider(
+                      value: rowCount.toDouble(),
+                      min: 10,
+                      max: 50,
+                      divisions: 4,
+                      label: 'Rows: ${rowCount}',
+                      onChanged: (value) {
+                        ref.read(rowCountProvider.state).state = value.toInt();
+                      }),
+                ),
+              )),
+        ],
+      ),
+    );
   }
 }
 
@@ -33,14 +108,15 @@ class Grid_View extends ConsumerWidget {
     final gridNotifier = ref.read(gridProvider.notifier);
     final selectedColor = ref.watch(selectedColorProvider);
     final ColorMapping = ref.read(colorMappingProvider);
+    final rowCount = ref.watch(rowCountProvider.state).state;
+    final colCount = ref.watch(colCountProvider.state).state;
     return GridView.builder(
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 10, childAspectRatio: 1),
-      itemCount: 10 * 10,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: colCount, childAspectRatio: 1),
+      itemCount: rowCount * colCount,
       itemBuilder: (context, index) {
-        int row = index ~/ 10;
-        int col = index % 10;
+        int row = index ~/ rowCount;
+        int col = index % colCount;
         String tileColorCode = GridState.gridColors[row][col];
         Color tileColor = ColorMapping.alphabetToColor[tileColorCode]!;
         return GestureDetector(
