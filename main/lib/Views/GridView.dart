@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main/ViewModel/Provider.dart';
 import 'package:main/Utilities/Themes.dart';
+import 'package:main/ViewModel/Provider.dart';
 
 class GridView_Container extends StatefulWidget {
   const GridView_Container({super.key});
@@ -20,10 +20,9 @@ class _GridView_ContainerState extends State<GridView_Container> {
 class GridView_Widget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final width = ref.watch(widthGridProvider.state).state;
-    final height = ref.watch(heightGridProvider.state).state;
-    // final rowCount = ref.watch(rowCountProvider.state).state;
-    final colCount = ref.watch(colCountProvider.state).state;
+    final width = ref.watch(widthGridProvider);
+    final height = ref.watch(heightGridProvider);
+    final colCount = ref.watch(colCountProvider);
     return Scaffold(
       backgroundColor: MainBackgroundColor,
       body: Stack(
@@ -46,53 +45,39 @@ class GridView_Widget extends ConsumerWidget {
                     min: 10,
                     max: 50,
                     divisions: 4,
-                    label: 'Columns: ${colCount}',
+                    label: 'Grid Size: $colCount',
                     onChanged: (value) {
-                      ref.read(colCountProvider.state).state = value.toInt();
+                      ref.read(colCountProvider.notifier).state = value.toInt();
                     }),
               )),
-          Align(
-              alignment: Alignment.bottomRight,
+          Positioned(
+              bottom: 5,
+              right: 5,
               child: Container(
                 width: 300,
                 height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          ref.read(widthGridProvider.state).state += 100;
-                          ref.read(heightGridProvider.state).state += 100;
-                        },
-                        child: const Text('+')),
-                    const SizedBox(width: 16),
-                    ElevatedButton(
-                        onPressed: () {
-                          ref.read(widthGridProvider.state).state -= 100;
-                          ref.read(heightGridProvider.state).state -= 100;
-                        },
-                        child: const Text('-')),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            ref.read(widthGridProvider.notifier).state += 100;
+                            ref.read(heightGridProvider.notifier).state += 100;
+                          },
+                          child: const Text('+')),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                          onPressed: () {
+                            ref.read(widthGridProvider.notifier).state -= 100;
+                            ref.read(heightGridProvider.notifier).state -= 100;
+                          },
+                          child: const Text('-')),
+                    ],
+                  ),
                 ),
               )),
-          // Align(
-          //     alignment: Alignment.centerRight,
-          //     child: RotatedBox(
-          //       quarterTurns: 3,
-          //       child: Container(
-          //         height: 50,
-          //         width: 300,
-          //         child: Slider(
-          //             value: rowCount.toDouble(),
-          //             min: 10,
-          //             max: 50,
-          //             divisions: 4,
-          //             label: 'Rows: ${rowCount}',
-          //             onChanged: (value) {
-          //               ref.read(rowCountProvider.state).state = value.toInt();
-          //             }),
-          //       ),
-          //     )),
         ],
       ),
     );
@@ -104,12 +89,11 @@ class Grid_View extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GridState = ref.watch(gridProvider);
+    final gridState = ref.watch(gridProvider);
     final gridNotifier = ref.read(gridProvider.notifier);
     final selectedColor = ref.watch(selectedColorProvider);
-    final ColorMapping = ref.read(colorMappingProvider);
-    // final rowCount = ref.watch(rowCountProvider.state).state;
-    final colCount = ref.watch(colCountProvider.state).state;
+    final colorMapping = ref.read(colorMappingProvider);
+    final colCount = ref.watch(colCountProvider.notifier).state;
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: colCount, childAspectRatio: 1),
@@ -117,12 +101,12 @@ class Grid_View extends ConsumerWidget {
       itemBuilder: (context, index) {
         int row = index ~/ colCount;
         int col = index % colCount;
-        String tileColorCode = GridState.gridColors[row][col];
-        Color tileColor = ColorMapping.alphabetToColor[tileColorCode]!;
+        String tileColorCode = gridState.gridColors[row][col];
+        Color tileColor = colorMapping.alphabetToColor[tileColorCode]!;
         return GestureDetector(
           onTap: () {
             final selectedColorCode =
-                ColorMapping.colorToAlphabets[selectedColor]!;
+                colorMapping.colorToAlphabets[selectedColor]!;
             gridNotifier.setColor(row, col, selectedColorCode);
           },
           onSecondaryTap: () {

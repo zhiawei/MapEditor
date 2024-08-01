@@ -33,6 +33,7 @@ class DFS {
 
         if (isValid(neighbor) &&
             grid[neighbor.x][neighbor.y] != 'R' &&
+            grid[neighbor.x][neighbor.y] != 'X' &&
             !visited.containsKey(neighbor)) {
           queue.add(neighbor);
           visited[neighbor] = current;

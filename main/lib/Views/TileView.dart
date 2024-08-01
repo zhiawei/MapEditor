@@ -24,7 +24,7 @@ class Sidebar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final gridNotifier = ref.read(gridProvider.notifier);
     // final rowCount = ref.watch(rowCountProvider.state).state;
-    final colCount = ref.watch(colCountProvider.state).state;
+    final colCount = ref.watch(colCountProvider);
 
     return SizedBox(
       width: 100,
@@ -32,17 +32,17 @@ class Sidebar extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ColorOptionButton(
-              color: Colors.red,
+              color: startColor,
               onTap: () =>
-                  ref.read(selectedColorProvider.notifier).state = Colors.red),
+                  ref.read(selectedColorProvider.notifier).state = startColor),
           // ColorOptionButton(
           //     color: Colors.blue,
           //     onTap: () =>
           //         ref.read(selectedColorProvider.notifier).state = Colors.blue),
           ColorOptionButton(
-              color: Colors.green,
-              onTap: () => ref.read(selectedColorProvider.notifier).state =
-                  Colors.green),
+              color: goalColor,
+              onTap: () =>
+                  ref.read(selectedColorProvider.notifier).state = goalColor),
           const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
@@ -76,8 +76,7 @@ class ColorOptionButton extends ConsumerWidget {
         decoration: BoxDecoration(
             color: color,
             border: isSelected
-                ? Border.all(
-                    color: const Color.fromARGB(255, 0, 255, 242), width: 2)
+                ? Border.all(color: highlightBorderColor, width: 2)
                 : null),
       ),
     );

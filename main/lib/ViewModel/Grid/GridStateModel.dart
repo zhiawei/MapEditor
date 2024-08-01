@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/Model/Coordinate.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:main/Model/MazeGenerationAlgorithms/DFS_maze.dart';
+import 'package:main/Model/SaveLoad.dart';
 
 class GridModel {
   final List<List<String>> gridColors;
@@ -84,34 +83,24 @@ class GridState extends StateNotifier<GridModel> {
     );
   }
 
-  String exportGridState() {
-    return jsonEncode(state.toJson());
+  Future<void> saveGridToFile() async {
+    await saveToFile(state);
   }
 
-  void importGridState(String jsonString) {
-    state = GridModel.fromJson(jsonDecode(jsonString));
-  }
-
-  Future<void> saveToFile() async {
-    final directory = await FilePicker.platform.saveFile();
-
-    if (directory != null) {
-      final file = File(directory);
-      final gridJson = exportGridState();
-      await file.writeAsString(gridJson);
+  Future<void> loadGridFromFile() async {
+    final gridModel = await loadFromFile();
+    if (gridModel != null) {
+      state = gridModel;
     }
   }
 
-  Future<void> loadFromFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['txt'],
+  void generateMaze() {
+    final mazeGenerator = MazeGenerator(
+      state.gridColors.length,
+      state.gridColors[0].length,
     );
+    final newMaze = mazeGenerator.maze;
 
-    if (result != null) {
-      final file = File(result.files.single.path!);
-      final gridJsonString = await file.readAsString();
-      importGridState(gridJsonString);
-    }
+    state = GridModel(gridColors: newMaze);
   }
 }

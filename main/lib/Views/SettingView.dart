@@ -28,9 +28,9 @@ class GridDisplay extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Grid State:', style: GridTextStyle()),
-          ...gridState.gridColors
-              .map((row) => Text(row.join(' '), style: GridTextStyle())),
+          Text('Grid State:', style: GridTextStyle())
+          // ...gridState.gridColors
+          //     .map((row) => Text(row.join(' '), style: GridTextStyle())),
         ],
       ),
     );

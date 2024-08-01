@@ -27,13 +27,13 @@ class Menu_View extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () async {
-              await ref.read(gridProvider.notifier).saveToFile();
+              await ref.read(gridProvider.notifier).saveGridToFile();
             },
           ),
           IconButton(
             icon: const Icon(Icons.upload),
             onPressed: () async {
-              await ref.read(gridProvider.notifier).loadFromFile();
+              await ref.read(gridProvider.notifier).loadGridFromFile();
             },
           ),
         ],

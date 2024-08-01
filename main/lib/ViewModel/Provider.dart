@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Grid/GridStateModel.dart';
+import 'package:main/Model/MazeGenerationAlgorithms/DFS_maze.dart';
 import 'package:main/Utilities/Themes.dart';
 
 final gridProvider = StateNotifierProvider<GridState, GridModel>((ref) {

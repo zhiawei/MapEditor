@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 const MainBackgroundColor = Color.fromARGB(255, 0, 0, 0);
+const startColor = Colors.red;
+const goalColor = Colors.green;
+const defaultColor = Colors.white;
+const wallColor = Color.fromARGB(36, 255, 255, 255);
+const visitedColor = Colors.blue;
+const pathColor = Colors.yellow;
+
+const highlightBorderColor = Color.fromARGB(255, 0, 255, 200);
 
 BoxDecoration ViewDecoration() {
   return BoxDecoration(
@@ -20,17 +28,19 @@ TextStyle GridTextStyle() {
 
 class ColorMapping {
   final Map<Color, String> colorToAlphabets = {
-    const Color.fromARGB(29, 255, 255, 255): 'W',
-    Colors.red: 'R',
-    Colors.blue: 'B',
-    Colors.green: 'G',
-    Colors.yellow: 'Y'
+    defaultColor: 'W',
+    startColor: 'R',
+    visitedColor: 'B',
+    goalColor: 'G',
+    pathColor: 'Y',
+    wallColor: 'X',
   };
   final Map<String, Color> alphabetToColor = {
-    'W': const Color.fromARGB(29, 255, 255, 255),
-    'R': Colors.red,
-    'B': Colors.blue,
-    'G': Colors.green,
-    'Y': Colors.yellow
+    'W': defaultColor,
+    'R': startColor,
+    'B': visitedColor,
+    'G': goalColor,
+    'Y': pathColor,
+    'X': wallColor
   };
 }

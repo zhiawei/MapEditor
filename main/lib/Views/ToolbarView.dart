@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/Model/AlgorithmHandler.dart';
 import 'package:main/ViewModel/Provider.dart';
 import 'package:main/Utilities/Themes.dart';
-import 'package:main/Model/messenger.dart';
+import 'package:main/Model/Messenger.dart';
 
 class ToolbarView_Container extends StatelessWidget {
   const ToolbarView_Container({super.key});
@@ -25,9 +25,8 @@ class Toolbar_View extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAlgorithm = ref.watch(selectedAlgorithmProvider);
     final List<String> algorithms = ['BFS', 'DFS'];
-    var algorithm;
-    String message;
-    final GridState = ref.watch(gridProvider);
+    String? algorithm;
+    final gridState = ref.watch(gridProvider);
     final gridNotifier = ref.read(gridProvider.notifier);
     return Container(
       child: Row(
@@ -60,15 +59,21 @@ class Toolbar_View extends ConsumerWidget {
           ElevatedButton(
               onPressed: () {
                 algorithm = selectedAlgorithm;
-                gridNotifier.resetPath(GridState.gridColors);
+                // gridNotifier.resetPath(gridState.gridColors);
                 AlgorithmHandler(ref, algorithm).perform();
               },
               child: const Text('Run Algorithm')),
           const SizedBox(width: 16),
           ElevatedButton(
+              onPressed: () {
+                gridNotifier.generateMaze();
+              },
+              child: const Text('Generate Maze')),
+          const SizedBox(width: 16),
+          ElevatedButton(
               onPressed: () async {
                 try {
-                  gridNotifier.resetPath(GridState.gridColors);
+                  gridNotifier.resetPath(gridState.gridColors);
                   await API_Messenger(ref).fetchBFSResult();
                   // Handle the message as needed
                 } catch (e) {
