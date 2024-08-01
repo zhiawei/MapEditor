@@ -11,7 +11,7 @@ class ToolbarView_Container extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 150,
+        height: 75,
         padding: const EdgeInsets.all(5.0),
         decoration: ViewDecoration(),
         child: Toolbar_View());
@@ -24,7 +24,9 @@ class Toolbar_View extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAlgorithm = ref.watch(selectedAlgorithmProvider);
+    final selectedMazeAlgorithm = ref.watch(selectedMazeAlgorithmProvider);
     final List<String> algorithms = ['BFS', 'DFS'];
+    final List<String> algorithmsMaze = ['DFS', 'Prim'];
     String? algorithm;
     final gridState = ref.watch(gridProvider);
     final gridNotifier = ref.read(gridProvider.notifier);
@@ -56,17 +58,42 @@ class Toolbar_View extends ConsumerWidget {
             iconEnabledColor: Colors.blue,
           ),
           const SizedBox(width: 16),
+          DropdownButton<String>(
+            value: selectedMazeAlgorithm,
+            hint: Text('Select a maze generator', style: MainTextStyle()),
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                ref.read(selectedMazeAlgorithmProvider.notifier).state =
+                    newValue;
+              }
+            },
+            items: algorithmsMaze.map((String algorithm) {
+              return DropdownMenuItem<String>(
+                  value: algorithm,
+                  child: Text(
+                    algorithm,
+                    style: MainTextStyle(),
+                  ));
+            }).toList(),
+            dropdownColor: Colors.blueAccent,
+            underline: Container(
+              height: 2,
+              color: Colors.transparent, // Hide the default underline
+            ),
+            iconEnabledColor: Colors.blue,
+          ),
+          const SizedBox(width: 16),
           ElevatedButton(
               onPressed: () {
                 algorithm = selectedAlgorithm;
-                // gridNotifier.resetPath(gridState.gridColors);
+                gridNotifier.resetPath(gridState.gridColors);
                 AlgorithmHandler(ref, algorithm).perform();
               },
               child: const Text('Run Algorithm')),
           const SizedBox(width: 16),
           ElevatedButton(
               onPressed: () {
-                gridNotifier.generateMaze();
+                gridNotifier.generateMaze(selectedMazeAlgorithm);
               },
               child: const Text('Generate Maze')),
           const SizedBox(width: 16),
@@ -80,7 +107,7 @@ class Toolbar_View extends ConsumerWidget {
                   print('Error: $e');
                 }
               },
-              child: const Text('Send')),
+              child: const Text('Send API')),
         ],
       ),
     );

@@ -19,6 +19,7 @@ final selectedColorProvider = StateProvider<Color>((ref) {
 final colorMappingProvider = Provider((ref) => ColorMapping());
 
 final selectedAlgorithmProvider = StateProvider<String?>((ref) => null);
+final selectedMazeAlgorithmProvider = StateProvider<String?>((ref) => null);
 
 // final rowCountProvider = StateProvider<int>((ref) => 10);
 final colCountProvider = StateProvider<int>((ref) => 10);

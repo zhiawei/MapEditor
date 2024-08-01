@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/Model/Coordinate.dart';
 import 'package:main/Model/MazeGenerationAlgorithms/DFS_maze.dart';
 import 'package:main/Model/SaveLoad.dart';
+import 'package:main/Model/MazeGenerationAlgorithms/Prim_maze.dart';
 
 class GridModel {
   final List<List<String>> gridColors;
@@ -73,7 +74,7 @@ class GridState extends StateNotifier<GridModel> {
     state = GridModel(
       gridColors: originalGrid.map((row) {
         return row.map((cell) {
-          if (cell == 'R' || cell == 'G') {
+          if (cell == 'R' || cell == 'G' || cell == 'X') {
             return cell;
           } else {
             return 'W';
@@ -94,11 +95,19 @@ class GridState extends StateNotifier<GridModel> {
     }
   }
 
-  void generateMaze() {
-    final mazeGenerator = MazeGenerator(
-      state.gridColors.length,
-      state.gridColors[0].length,
-    );
+  void generateMaze(algo) {
+    dynamic mazeGenerator;
+    if (algo == 'DFS') {
+      mazeGenerator = DFS_MazeGenerator(
+        state.gridColors.length,
+        state.gridColors[0].length,
+      );
+    } else if (algo == 'Prim') {
+      mazeGenerator = Prim_MazeGenerator(
+        state.gridColors.length,
+        state.gridColors[0].length,
+      );
+    }
     final newMaze = mazeGenerator.maze;
 
     state = GridModel(gridColors: newMaze);

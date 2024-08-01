@@ -40,15 +40,19 @@ class GridView_Widget extends ConsumerWidget {
               child: Container(
                 height: 50,
                 width: 300,
-                child: Slider(
-                    value: colCount.toDouble(),
-                    min: 10,
-                    max: 50,
-                    divisions: 4,
-                    label: 'Grid Size: $colCount',
-                    onChanged: (value) {
-                      ref.read(colCountProvider.notifier).state = value.toInt();
-                    }),
+                child: SliderTheme(
+                  data: customSliderTheme(),
+                  child: Slider(
+                      value: colCount.toDouble(),
+                      min: 10,
+                      max: 50,
+                      divisions: 4,
+                      label: 'Grid Size: $colCount',
+                      onChanged: (value) {
+                        ref.read(colCountProvider.notifier).state =
+                            value.toInt();
+                      }),
+                ),
               )),
           Positioned(
               bottom: 5,
@@ -106,7 +110,7 @@ class Grid_View extends ConsumerWidget {
         return GestureDetector(
           onTap: () {
             final selectedColorCode =
-                colorMapping.colorToAlphabets[selectedColor]!;
+                colorMapping.colorToAlphabet[selectedColor]!;
             gridNotifier.setColor(row, col, selectedColorCode);
           },
           onSecondaryTap: () {

@@ -1,11 +1,11 @@
 import 'dart:math';
 
-class MazeGenerator {
+class DFS_MazeGenerator {
   final int rows;
   final int cols;
   late List<List<String>> maze;
 
-  MazeGenerator(this.rows, this.cols) {
+  DFS_MazeGenerator(this.rows, this.cols) {
     maze = List.generate(
         rows, (_) => List.filled(cols, 'X')); // Initialize with 'X'
     generateMaze();
