@@ -117,10 +117,14 @@ class Grid_View extends ConsumerWidget {
             gridNotifier.setColor(row, col, 'W');
           },
           child: Container(
-            margin: const EdgeInsets.all(1),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey), color: tileColor),
-          ),
+              margin: const EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey), color: tileColor),
+              child: Center(
+                  child: Text(
+                tileColorCode,
+                style: gridViewTextStyle(),
+              ))),
         );
       },
     );

@@ -17,13 +17,18 @@ BoxDecoration ViewDecoration() {
   );
 }
 
-TextStyle MainTextStyle() {
+TextStyle mainTextStyle() {
   return const TextStyle(color: Colors.white);
 }
 
-TextStyle GridTextStyle() {
+TextStyle gridTextStyle() {
   return const TextStyle(
       color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold);
+}
+
+TextStyle gridViewTextStyle() {
+  return const TextStyle(
+      color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold);
 }
 
 class ColorMapping {
@@ -55,7 +60,7 @@ SliderThemeData customSliderTheme() {
           const Color.fromARGB(255, 0, 110, 255), // Color of the active track
       inactiveTrackColor: Colors.grey, // Color of the inactive track
       thumbColor: const Color.fromARGB(255, 0, 89, 255), // Color of the thumb
-      overlayColor: Colors.red
+      overlayColor: Colors.blue
           .withOpacity(0.2), // Color of the overlay when thumb is active
       thumbShape:
           RoundSliderThumbShape(enabledThumbRadius: 12), // Size of the thumb

@@ -36,7 +36,7 @@ class Toolbar_View extends ConsumerWidget {
         children: [
           DropdownButton<String>(
             value: selectedAlgorithm,
-            hint: Text('Select an algorithm', style: MainTextStyle()),
+            hint: Text('Select an algorithm', style: mainTextStyle()),
             onChanged: (String? newValue) {
               if (newValue != null) {
                 ref.read(selectedAlgorithmProvider.notifier).state = newValue;
@@ -47,7 +47,7 @@ class Toolbar_View extends ConsumerWidget {
                   value: algorithm,
                   child: Text(
                     algorithm,
-                    style: MainTextStyle(),
+                    style: mainTextStyle(),
                   ));
             }).toList(),
             dropdownColor: Colors.blueAccent,
@@ -60,7 +60,7 @@ class Toolbar_View extends ConsumerWidget {
           const SizedBox(width: 16),
           DropdownButton<String>(
             value: selectedMazeAlgorithm,
-            hint: Text('Select a maze generator', style: MainTextStyle()),
+            hint: Text('Select a maze generator', style: mainTextStyle()),
             onChanged: (String? newValue) {
               if (newValue != null) {
                 ref.read(selectedMazeAlgorithmProvider.notifier).state =
@@ -72,7 +72,7 @@ class Toolbar_View extends ConsumerWidget {
                   value: algorithm,
                   child: Text(
                     algorithm,
-                    style: MainTextStyle(),
+                    style: mainTextStyle(),
                   ));
             }).toList(),
             dropdownColor: Colors.blueAccent,
