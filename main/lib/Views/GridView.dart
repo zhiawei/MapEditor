@@ -23,6 +23,7 @@ class GridView_Widget extends ConsumerWidget {
     final width = ref.watch(widthGridProvider);
     final height = ref.watch(heightGridProvider);
     final colCount = ref.watch(colCountProvider);
+    final visitedPoints = ref.watch(visitedPointsProvider);
     return Scaffold(
       backgroundColor: MainBackgroundColor,
       body: Stack(
@@ -82,6 +83,16 @@ class GridView_Widget extends ConsumerWidget {
                   ),
                 ),
               )),
+          Positioned(
+              top: 5,
+              right: 5,
+              child: Container(
+                alignment: Alignment.centerRight,
+                width: 120,
+                height: 20,
+                child: Text('Searched Tile: ${visitedPoints.length}',
+                    style: mainTextStyle()),
+              ))
         ],
       ),
     );

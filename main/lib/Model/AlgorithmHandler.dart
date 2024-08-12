@@ -7,10 +7,10 @@ import 'Coordinate.dart';
 
 class AlgorithmHandler {
   final WidgetRef ref;
-  final String selectedAlgorithm;
+  final String? selectedAlgorithm;
   dynamic algorithms;
   Timer? timer;
-  List<Point> visitedPoints = [];
+  // List<Point> visitedPoints = [];
   AlgorithmHandler(this.ref, this.selectedAlgorithm);
 
   Future<void> perform() async {
@@ -18,6 +18,7 @@ class AlgorithmHandler {
     Point? goal;
 
     final gridState = ref.read(gridProvider);
+    final visitedPoints = ref.read(visitedPointsProvider.notifier).state = [];
     // final rowCount = ref.watch(rowCountProvider.notifier).state;
     final colCount = ref.watch(colCountProvider.notifier).state;
 
@@ -40,6 +41,7 @@ class AlgorithmHandler {
       List<Point> path = algorithms.perform(start, goal, visitedPoints);
       if (path.isNotEmpty) {
         print(visitedPoints);
+        ref.read(visitedPointsProvider.notifier).state = visitedPoints;
         await ref.read(gridProvider.notifier).highlightVisited(visitedPoints);
         await ref.read(gridProvider.notifier).highlightPath(path);
       } else {
@@ -49,35 +51,4 @@ class AlgorithmHandler {
       print('Start or Goal not defined');
     }
   }
-
-  // void Start() {
-  //   Point? start;
-  //   Point? goal;
-
-  //   final gridState = ref.read(gridProvider);
-
-  //   for (int row = 0; row < gridState.gridColors.length; row++) {
-  //     for (int col = 0; col < gridState.gridColors[row].length; col++) {
-  //       if (gridState.gridColors[row][col] == 'R') {
-  //         start = Point(row, col);
-  //       } else if (gridState.gridColors[row][col] == 'G') {
-  //         goal = Point(row, col);
-  //       }
-  //     }
-  //   }
-
-  //   if (start != null && goal != null) {
-  //     this.algorithms = BFS(gridState.gridColors, 10, 10, start, goal);
-  //     algorithms.initialize();
-  //     timer?.cancel();
-  //     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-  //       algoResult path = algorithms.step(visitedPoints);
-  //       ref.read(gridProvider.notifier).highlightVisited(visitedPoints);
-  //       if (path.current == null || path.current == goal) {
-  //         timer.cancel();
-  //         ref.read(gridProvider.notifier).highlightPath(path.visitedPoints);
-  //       }
-  //     });
-  //   }
-  // }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Grid/GridStateModel.dart';
-import 'package:main/Model/MazeGenerationAlgorithms/DFS_maze.dart';
 import 'package:main/Utilities/Themes.dart';
+import 'package:main/Model/Coordinate.dart';
 
 final gridProvider = StateNotifierProvider<GridState, GridModel>((ref) {
   // final rowCount = ref.watch(rowCountProvider);
@@ -26,3 +26,5 @@ final colCountProvider = StateProvider<int>((ref) => 10);
 
 final widthGridProvider = StateProvider<double>((ref) => 500);
 final heightGridProvider = StateProvider<double>((ref) => 500);
+
+final visitedPointsProvider = StateProvider<List<Point>>((ref) => []);
