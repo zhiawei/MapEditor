@@ -28,3 +28,7 @@ final widthGridProvider = StateProvider<double>((ref) => 500);
 final heightGridProvider = StateProvider<double>((ref) => 500);
 
 final visitedPointsProvider = StateProvider<List<Point>>((ref) => []);
+
+final visibleGridTextProvider = StateProvider<bool>((ref) => false);
+
+final errorMessageProvider = StateProvider<String>((ref) => '');

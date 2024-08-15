@@ -23,7 +23,7 @@ TextStyle mainTextStyle() {
 
 TextStyle gridTextStyle() {
   return const TextStyle(
-      color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold);
+      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
 }
 
 TextStyle gridViewTextStyle() {

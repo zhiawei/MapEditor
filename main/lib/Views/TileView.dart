@@ -25,6 +25,7 @@ class Sidebar extends ConsumerWidget {
     final gridNotifier = ref.read(gridProvider.notifier);
     // final rowCount = ref.watch(rowCountProvider.state).state;
     final colCount = ref.watch(colCountProvider);
+    final isChecked = ref.watch(visibleGridTextProvider);
 
     return SizedBox(
       width: 100,
@@ -35,10 +36,10 @@ class Sidebar extends ConsumerWidget {
               color: startColor,
               onTap: () =>
                   ref.read(selectedColorProvider.notifier).state = startColor),
-          // ColorOptionButton(
-          //     color: Colors.blue,
-          //     onTap: () =>
-          //         ref.read(selectedColorProvider.notifier).state = Colors.blue),
+          ColorOptionButton(
+              color: wallColor,
+              onTap: () =>
+                  ref.read(selectedColorProvider.notifier).state = wallColor),
           ColorOptionButton(
               color: goalColor,
               onTap: () =>
@@ -48,7 +49,19 @@ class Sidebar extends ConsumerWidget {
               onPressed: () {
                 gridNotifier.resetGrid(colCount);
               },
-              child: const Text('Reset Grid'))
+              child: const Text('Reset Grid')),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Checkbox(
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    ref.read(visibleGridTextProvider.notifier).state = value!;
+                  }),
+              Text('Visible GridText', style: mainTextStyle())
+            ],
+          )
         ],
       ),
     );

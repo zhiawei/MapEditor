@@ -21,6 +21,7 @@ class AlgorithmHandler {
     final visitedPoints = ref.read(visitedPointsProvider.notifier).state = [];
     // final rowCount = ref.watch(rowCountProvider.notifier).state;
     final colCount = ref.watch(colCountProvider.notifier).state;
+    final errorMessage = ref.watch(errorMessageProvider);
 
     for (int row = 0; row < gridState.gridColors.length; row++) {
       for (int col = 0; col < gridState.gridColors[row].length; col++) {
@@ -40,15 +41,16 @@ class AlgorithmHandler {
       }
       List<Point> path = algorithms.perform(start, goal, visitedPoints);
       if (path.isNotEmpty) {
-        print(visitedPoints);
+        ref.read(errorMessageProvider.notifier).state = '';
         ref.read(visitedPointsProvider.notifier).state = visitedPoints;
         await ref.read(gridProvider.notifier).highlightVisited(visitedPoints);
         await ref.read(gridProvider.notifier).highlightPath(path);
       } else {
-        print('No path found');
+        ref.read(errorMessageProvider.notifier).state = 'No path found';
       }
     } else {
-      print('Start or Goal not defined');
+      ref.read(errorMessageProvider.notifier).state =
+          'Start or Goal not defined';
     }
   }
 }

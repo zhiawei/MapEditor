@@ -109,6 +109,7 @@ class Grid_View extends ConsumerWidget {
     final selectedColor = ref.watch(selectedColorProvider);
     final colorMapping = ref.read(colorMappingProvider);
     final colCount = ref.watch(colCountProvider.notifier).state;
+    final isChecked = ref.watch(visibleGridTextProvider);
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: colCount, childAspectRatio: 1),
@@ -128,14 +129,17 @@ class Grid_View extends ConsumerWidget {
             gridNotifier.setColor(row, col, 'W');
           },
           child: Container(
-              margin: const EdgeInsets.all(1),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey), color: tileColor),
-              child: Center(
-                  child: Text(
-                tileColorCode,
-                style: gridViewTextStyle(),
-              ))),
+            margin: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey), color: tileColor),
+            child: Center(
+                child: Visibility(
+                    visible: isChecked,
+                    child: Text(
+                      tileColorCode,
+                      style: gridViewTextStyle(),
+                    ))),
+          ),
         );
       },
     );
