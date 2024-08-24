@@ -8,13 +8,58 @@ const wallColor = Color.fromARGB(36, 255, 255, 255);
 const visitedColor = Colors.blue;
 const pathColor = Colors.yellow;
 
+const mainLayoutColor = Color.fromARGB(255, 39, 39, 39);
+const mainTooltipColor = Color.fromARGB(255, 75, 75, 75);
 const highlightBorderColor = Color.fromARGB(255, 0, 255, 200);
 
 BoxDecoration ViewDecoration() {
   return BoxDecoration(
-    color: const Color.fromARGB(255, 39, 39, 39),
+    color: mainLayoutColor,
     border: Border.all(color: Colors.blue, width: 1),
   );
+}
+
+BoxDecoration tooltipDecoration() {
+  return BoxDecoration(
+    color: mainTooltipColor, // Custom tooltip background color
+    borderRadius: BorderRadius.circular(8),
+  );
+}
+
+TextStyle speedControllerTextStyle() {
+  return const TextStyle(color: Colors.white);
+}
+
+OutlineInputBorder speedControllerBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: Colors.black, // Change default border color
+    ),
+  );
+}
+
+OutlineInputBorder speedControllerFocusedBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: highlightBorderColor, // Change border color when enabled
+      width: 1.0,
+    ),
+  );
+}
+
+OutlineInputBorder speedControllerEnabledBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: Colors.blue, // Change default border color
+    ),
+  );
+}
+
+TextStyle tooltipTextStyle() {
+  return const TextStyle(color: Colors.white, fontSize: 20);
 }
 
 TextStyle mainTextStyle() {
@@ -28,7 +73,7 @@ TextStyle gridTextStyle() {
 
 TextStyle gridViewTextStyle() {
   return const TextStyle(
-      color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold);
+      color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold);
 }
 
 class ColorMapping {
@@ -64,5 +109,6 @@ SliderThemeData customSliderTheme() {
           .withOpacity(0.2), // Color of the overlay when thumb is active
       thumbShape:
           RoundSliderThumbShape(enabledThumbRadius: 12), // Size of the thumb
-      overlayShape: RoundSliderOverlayShape(overlayRadius: 24));
+      overlayShape: RoundSliderOverlayShape(overlayRadius: 24),
+      valueIndicatorColor: mainTooltipColor);
 }

@@ -86,12 +86,36 @@ class GridView_Widget extends ConsumerWidget {
           Positioned(
               top: 5,
               right: 5,
-              child: Container(
-                alignment: Alignment.centerRight,
-                width: 120,
-                height: 20,
-                child: Text('Searched Tile: ${visitedPoints.length}',
-                    style: mainTextStyle()),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    alignment: Alignment.centerRight,
+                    width: 120,
+                    height: 20,
+                    child: Text('Searched Tile: ${visitedPoints.length}',
+                        style: mainTextStyle(), textAlign: TextAlign.end),
+                  ),
+                  const SizedBox(height: 50),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    width: 200,
+                    height: 20,
+                    child: Text('Left Click to add tile',
+                        style: mainTextStyle(), textAlign: TextAlign.end),
+                  ),
+                  const SizedBox(width: 16),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    width: 200,
+                    height: 20,
+                    child: Text(
+                      'Right Click to remove tile',
+                      style: mainTextStyle(),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
               ))
         ],
       ),
@@ -110,6 +134,7 @@ class Grid_View extends ConsumerWidget {
     final colorMapping = ref.read(colorMappingProvider);
     final colCount = ref.watch(colCountProvider.notifier).state;
     final isChecked = ref.watch(visibleGridTextProvider);
+
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: colCount, childAspectRatio: 1),
@@ -119,26 +144,33 @@ class Grid_View extends ConsumerWidget {
         int col = index % colCount;
         String tileColorCode = gridState.gridColors[row][col];
         Color tileColor = colorMapping.alphabetToColor[tileColorCode]!;
-        return GestureDetector(
-          onTap: () {
-            final selectedColorCode =
-                colorMapping.colorToAlphabet[selectedColor]!;
-            gridNotifier.setColor(row, col, selectedColorCode);
-          },
-          onSecondaryTap: () {
-            gridNotifier.setColor(row, col, 'W');
-          },
-          child: Container(
-            margin: const EdgeInsets.all(1),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey), color: tileColor),
-            child: Center(
-                child: Visibility(
-                    visible: isChecked,
-                    child: Text(
-                      tileColorCode,
-                      style: gridViewTextStyle(),
-                    ))),
+        return Tooltip(
+          message: 'Row: $row, Col: $col',
+          preferBelow: true, // Show tooltip above the widget
+          verticalOffset: 20, // Adjust the vertical position of the tooltip
+          decoration: tooltipDecoration(),
+          textStyle: tooltipTextStyle(), // Display the coordinates
+          child: GestureDetector(
+            onTap: () {
+              final selectedColorCode =
+                  colorMapping.colorToAlphabet[selectedColor]!;
+              gridNotifier.setColor(row, col, selectedColorCode);
+            },
+            onSecondaryTap: () {
+              gridNotifier.setColor(row, col, 'W');
+            },
+            child: Container(
+              margin: const EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey), color: tileColor),
+              child: Center(
+                  child: Visibility(
+                      visible: isChecked,
+                      child: Text(
+                        tileColorCode,
+                        style: gridViewTextStyle(),
+                      ))),
+            ),
           ),
         );
       },

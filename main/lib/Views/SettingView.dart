@@ -10,10 +10,11 @@ class SettingView_Container extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,
-        padding: const EdgeInsets.all(5.0),
-        decoration: ViewDecoration(),
-        child: GridDisplay());
+      width: 300,
+      padding: const EdgeInsets.all(5.0),
+      decoration: ViewDecoration(),
+      child: const GridDisplay(),
+    );
   }
 }
 
@@ -46,6 +47,19 @@ class GridDisplay extends ConsumerWidget {
                 ),
                 itemCount: visitedPoints.length,
                 itemBuilder: (context, index) {
+                  // Determine the color based on the index
+                  Color itemColor;
+                  if (index == 0) {
+                    itemColor = const Color.fromARGB(
+                        255, 150, 0, 0); // First item color
+                  } else if (index == visitedPoints.length - 1) {
+                    itemColor = const Color.fromARGB(
+                        255, 0, 134, 69); // Last item color
+                  } else {
+                    itemColor = const Color.fromARGB(
+                        43, 224, 224, 224); // Default color
+                  }
+
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Container(
@@ -53,7 +67,7 @@ class GridDisplay extends ConsumerWidget {
                       height: 50,
                       width: 200,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(43, 224, 224, 224),
+                        color: itemColor, // Use the determined color
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Text(
@@ -64,20 +78,7 @@ class GridDisplay extends ConsumerWidget {
                   );
                 },
               ),
-
-              // child: ListView.builder(
-              //     itemCount: visitedPoints.length,
-              //     itemBuilder: (context, index) {
-              //       return Padding(
-              //           padding: const EdgeInsets.symmetric(vertical: 4.0),
-              //           child: Text(
-              //             'Tile: (x: ${visitedPoints[index].x}, y: ${visitedPoints[index].y})',
-              //             style: gridTextStyle(),
-              //           ));
-              //     }),
             )
-          // ...gridState.gridColors
-          //     .map((row) => Text(row.join(' '), style: GridTextStyle())),
         ],
       ),
     );

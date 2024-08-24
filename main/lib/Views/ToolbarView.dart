@@ -25,11 +25,15 @@ class Toolbar_View extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAlgorithm = ref.watch(selectedAlgorithmProvider);
     final selectedMazeAlgorithm = ref.watch(selectedMazeAlgorithmProvider);
-    final List<String> algorithms = ['BFS', 'DFS'];
+    final highlightSpeed = ref.watch(highlightSpeedProvider);
+    final List<String> algorithms = ['BFS', 'DFS', 'A*'];
     final List<String> algorithmsMaze = ['DFS', 'Prim'];
     String? algorithm;
     final gridState = ref.watch(gridProvider);
     final gridNotifier = ref.read(gridProvider.notifier);
+    final TextEditingController speedController =
+        TextEditingController(text: highlightSpeed.toString());
+
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,6 +112,34 @@ class Toolbar_View extends ConsumerWidget {
                 }
               },
               child: const Text('Send API')),
+          const SizedBox(width: 16),
+          // New input field for highlight speed
+          Container(
+            width: 100,
+            child: TextField(
+              controller: speedController,
+              decoration: InputDecoration(
+                labelText: 'Speed (ms)',
+                labelStyle: speedControllerTextStyle(),
+                border: speedControllerBorder(),
+                focusedBorder: speedControllerFocusedBorder(),
+                enabledBorder: speedControllerEnabledBorder(),
+                fillColor: mainLayoutColor, // Change background fill color
+                filled: true, // Enable background fill color
+              ),
+              style: speedControllerTextStyle(),
+              keyboardType: TextInputType.number,
+              onSubmitted: (value) {
+                int? speed = int.tryParse(value);
+                if (speed != null && speed > 0) {
+                  ref.read(highlightSpeedProvider.notifier).state = speed;
+                } else {
+                  // Reset to previous valid value if input is invalid
+                  speedController.text = highlightSpeed.toString();
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

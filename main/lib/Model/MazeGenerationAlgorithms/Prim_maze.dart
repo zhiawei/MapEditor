@@ -52,7 +52,6 @@ class Prim_MazeGenerator {
           .toList();
 
       if (visitedCells.length == 1) {
-        final visitedCell = visitedCells.first;
         maze[wallRow][wallCol] = 'X'; // Mark the wall cell as path
         addWalls(wallRow, wallCol); // Add new walls around the newly added path
       }

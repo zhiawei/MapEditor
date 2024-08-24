@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/ViewModel/Provider.dart';
 import 'Algorithms/BFS.dart';
 import 'Algorithms/DFS.dart';
+import 'Algorithms/AStar.dart';
 import 'Coordinate.dart';
 
 class AlgorithmHandler {
@@ -21,7 +22,6 @@ class AlgorithmHandler {
     final visitedPoints = ref.read(visitedPointsProvider.notifier).state = [];
     // final rowCount = ref.watch(rowCountProvider.notifier).state;
     final colCount = ref.watch(colCountProvider.notifier).state;
-    final errorMessage = ref.watch(errorMessageProvider);
 
     for (int row = 0; row < gridState.gridColors.length; row++) {
       for (int col = 0; col < gridState.gridColors[row].length; col++) {
@@ -38,6 +38,9 @@ class AlgorithmHandler {
         algorithms = BFS(gridState.gridColors, colCount, colCount, start, goal);
       } else if (selectedAlgorithm == 'DFS') {
         algorithms = DFS(gridState.gridColors, colCount, colCount);
+      } else if (selectedAlgorithm == 'A*') {
+        algorithms =
+            AStar(gridState.gridColors, colCount, colCount, start, goal);
       }
       List<Point> path = algorithms.perform(start, goal, visitedPoints);
       if (path.isNotEmpty) {

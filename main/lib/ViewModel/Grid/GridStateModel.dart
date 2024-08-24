@@ -4,9 +4,11 @@ import 'package:main/Model/Coordinate.dart';
 import 'package:main/Model/MazeGenerationAlgorithms/DFS_maze.dart';
 import 'package:main/Model/SaveLoad.dart';
 import 'package:main/Model/MazeGenerationAlgorithms/Prim_maze.dart';
+import 'package:main/ViewModel/Provider.dart';
 
 class GridModel {
   final List<List<String>> gridColors;
+
   GridModel({required this.gridColors});
 
   GridModel copyWith({List<List<String>>? gridColors}) {
@@ -25,7 +27,9 @@ class GridModel {
 }
 
 class GridState extends StateNotifier<GridModel> {
-  GridState()
+  final Ref ref;
+
+  GridState(this.ref)
       : super(GridModel(
             gridColors:
                 List.generate(10, (_) => List<String>.filled(10, 'W'))));
@@ -44,12 +48,13 @@ class GridState extends StateNotifier<GridModel> {
 
   Future<void> highlightPath(List<Point> path) async {
     final newGridColors = [...state.gridColors];
+    final highlightSpeed = ref.watch(highlightSpeedProvider);
     for (Point point in path) {
       if (newGridColors[point.x][point.y] != 'R' &&
           newGridColors[point.x][point.y] != 'G') {
         newGridColors[point.x][point.y] = 'Y';
         state = state.copyWith(gridColors: newGridColors);
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future.delayed(Duration(milliseconds: highlightSpeed));
       }
     }
     state = state.copyWith(gridColors: newGridColors);
@@ -57,12 +62,13 @@ class GridState extends StateNotifier<GridModel> {
 
   Future<void> highlightVisited(List<Point> visitedPoints) async {
     final newGridColors = [...state.gridColors];
+    final highlightSpeed = ref.watch(highlightSpeedProvider);
     for (final point in visitedPoints) {
       if (newGridColors[point.x][point.y] != 'R' &&
           newGridColors[point.x][point.y] != 'G') {
         newGridColors[point.x][point.y] = 'Y';
         state = state.copyWith(gridColors: newGridColors);
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future.delayed(Duration(milliseconds: highlightSpeed));
         newGridColors[point.x][point.y] = 'B';
         state = state.copyWith(gridColors: newGridColors); // Delay
       }

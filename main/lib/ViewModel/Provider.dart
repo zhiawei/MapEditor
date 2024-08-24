@@ -7,7 +7,7 @@ import 'package:main/Model/Coordinate.dart';
 final gridProvider = StateNotifierProvider<GridState, GridModel>((ref) {
   // final rowCount = ref.watch(rowCountProvider);
   final colCount = ref.watch(colCountProvider);
-  final gridState = GridState();
+  final gridState = GridState(ref);
   gridState.resetGrid(colCount);
   return gridState;
 });
@@ -32,3 +32,5 @@ final visitedPointsProvider = StateProvider<List<Point>>((ref) => []);
 final visibleGridTextProvider = StateProvider<bool>((ref) => false);
 
 final errorMessageProvider = StateProvider<String>((ref) => '');
+
+final highlightSpeedProvider = StateProvider<int>((ref) => 100);
