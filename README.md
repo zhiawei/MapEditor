@@ -29,6 +29,6 @@ To install MapEditor, please follow these steps:
 
 To run **MapEditor** on your Windows machine, simply download the pre-built executable from the GitHub repository:
 
-1. **Navigate to the [Releases folder](https://github.com/yourusername/your-repo-name/tree/main/build/windows/runner/Release)**.
-2. Download the `MapEditor.exe` file.
+1. **Navigate to the [Releases folder](https://github.com/zhiawei/MapEditor/build/Release)**.
+2. Download the folder.
 3. Run the executable to start using MapEditor.
