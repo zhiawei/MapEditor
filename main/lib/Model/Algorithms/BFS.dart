@@ -37,6 +37,7 @@ class BFS {
       Point current = queue.removeFirst();
 
       if (current == goal) {
+        print(visited);
         return getPath(visited, start, goal);
       }
 
