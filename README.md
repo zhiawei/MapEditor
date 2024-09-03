@@ -1,47 +1,34 @@
 # MapEditor
 
-**MapEditor** is a versatile software tool designed for generating and customizing Grid World environments. It allows users to create, edit, and visualize grid-based maps, which can be used for testing and running various pathfinding and search algorithms like Breadth-First Search (BFS), Depth-First Search (DFS), A* Search, and more.
-
-## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-  - [Windows](#windows)
-  - [macOS](#macos)
-  - [Linux](#linux)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Supported Algorithms](#supported-algorithms)
-- [Customization Options](#customization-options)
-- [Contributing](#contributing)
-- [License](#license)
+MapEditor is a comprehensive software tool designed to enhance the interpretability and transparency of AI models through advanced visualization and interactive exploration techniques. It enables researchers and developers to customize and visualize Grid World environments, facilitating efficient algorithm development, testing, and analysis. The tool is especially useful for visualizing search algorithms and providing educational insights into AI concepts.
 
 ## Features
 
 - **Grid World Generation**: Easily create customizable grid maps with adjustable dimensions.
 - **Environment Customization**: Add obstacles, start points, goal points, and more to design complex environments.
-- **Algorithm Integration**: Run various pathfinding and search algorithms directly within the tool.
-- **Visualization**: Visualize the pathfinding process step-by-step for better understanding and debugging.
-- **Save and Load**: Save your grid world configurations and load them later for further customization or testing.
-- **User-Friendly Interface**: Intuitive interface designed for both beginners and experienced developers.
+- **Algorithm Visualization**: Visualize and interact with various pathfinding and search algorithms directly within the tool.
+- **Maze Generation**: Generate mazes using algorithms to create varied and challenging environments.
+- **API Integration**: Connect MapEditor with external programming platforms to visualize custom algorithms. This allows the software to act as a frontend, with the API providing backend capabilities.
+- **Export and Import**: Save your grid world configurations and load them later for further customization or testing.
 
 ## Installation
 
-### Windows
+To install MapEditor, please follow these steps:
 
-1. **Download the Installer**: Download the latest version of MapEditor from the [official website](#) or the [GitHub releases page](#).
-2. **Run the Installer**: Double-click the downloaded installer and follow the on-screen instructions.
-3. **Launch MapEditor**: Once installed, launch MapEditor from the Start Menu or desktop shortcut.
-
-### macOS
-
-1. **Download the DMG File**: Download the latest version of MapEditor from the [official website](#) or the [GitHub releases page](#).
-2. **Install MapEditor**: Open the downloaded DMG file and drag the MapEditor application to your Applications folder.
-3. **Run MapEditor**: Open MapEditor from your Applications folder.
-
-### Linux
-
-1. **Download the AppImage**: Download the latest version of MapEditor from the [official website](#) or the [GitHub releases page](#).
-2. **Make the AppImage Executable**: Open a terminal and run:
+1. **Clone the Repository**:  
    ```bash
-   chmod +x MapEditor-x.x.x.AppImage
+   git clone https://github.com/zhiawei/MapEditor.git
+
+### Windows Build
+
+1. **Launch MapEditor**: Once installed, launch MapEditor from the Start Menu or desktop shortcut.
+
+## Installation
+
+### Download the Executable
+
+To run **MapEditor** on your Windows machine, simply download the pre-built executable from the GitHub repository:
+
+1. **Navigate to the [Releases folder](https://github.com/yourusername/your-repo-name/tree/main/build/windows/runner/Release)**.
+2. Download the `MapEditor.exe` file.
+3. Run the executable to start using MapEditor.
